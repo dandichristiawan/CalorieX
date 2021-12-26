@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "652509344494",
+    "project_id": "caloriex-9ffd1",
+    "storage_bucket": "caloriex-9ffd1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652509344494:android:7d3ba21ab76d73e982b9ff",
+        "android_client_info": {
+          "package_name": "com.caloriex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "652509344494-aiv7t4qs84cdi5g3sn8ah6ejcng14r2d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzBwyt9egyMYwOrFBI1-M21P4pFqXq5PY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "652509344494-aiv7t4qs84cdi5g3sn8ah6ejcng14r2d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
