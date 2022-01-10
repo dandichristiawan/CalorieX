@@ -5,19 +5,25 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Dimensions,
 } from 'react-native'
+import {PieChart} from 'react-native-chart-kit'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import Timeline from 'react-native-timeline-flatlist'
 import {AuthContext} from '../navigation/AuthProvider'
 import firestore from '@react-native-firebase/firestore'
 import firebase from '@react-native-firebase/app'
+import {windowWidth} from './../utils/Dimensions'
 
 export default function HomeScreen ({navigation}) {
-    
+  
+  const {width, height} = Dimensions.get('window')
+
   const {user, logout} = useContext(AuthContext)
 
   const [userInfo, setUserInfo] = useState([])
-
+  
+  //Ngambil data dari firestore
   React.useEffect(() => {
     firestore()
       .collection('users')
@@ -35,29 +41,72 @@ export default function HomeScreen ({navigation}) {
   const lists = [
     {
       time: '09:00',
-      title: '100 m walking',
+      title: '100 m',
       description: 'Jakarta Selatan, Indonesia',
       circleColor: '#009688',
       lineColor: '#009688',
     },
     {
       time: '10:45',
-      title: '300 m walking',
+      title: '300 m',
       description: 'Jakarta Pusat, Indonesia',
+      circleColor: '#285cb0',
     },
     {
       time: '14:00',
-      title: '200 m walking',
+      title: '200 m',
       description: 'Jakarta Selatan, Indonesia',
       lineColor: '#009688',
     },
     {
       time: '16:30',
-      title: '3 km running',
+      title: '2 km',
       description: 'Bandung, West Java, Indonesia',
-      circleColor: '#009688',
+      circleColor: '#2dccdb',
     },
   ]
+
+  const data = [
+    {
+      name: 'cal',
+      calories: 13,
+      color: '#009688',
+      legendFontColor: '#7F7F7F',
+      legendFontSize: 15,
+    },
+    {
+      name: 'cal',
+      calories: 28,
+      color: '#285cb0',
+      legendFontColor: '#7F7F7F',
+      legendFontSize: 15,
+    },
+    {
+      name: 'cal',
+      calories: 52,
+      color: '#2dccdb',
+      legendFontColor: '#7F7F7F',
+      legendFontSize: 15,
+    },
+    {
+      name: 'cal',
+      calories: 33,
+      color: '#2D9CDB',
+      legendFontColor: '#7F7F7F',
+      legendFontSize: 15,
+    },
+  ]
+
+  const chartConfig = {
+    backgroundGradientFrom: '#1E2923',
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: '#08130D',
+    backgroundGradientToOpacity: 0,
+    color: (opacity = 1) => `rgba(26, 25, 14, ${opacity})`,
+    strokeWidth: 1, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false, // optional
+  }
 
   return (
     <View style={styles.container}>
@@ -70,20 +119,28 @@ export default function HomeScreen ({navigation}) {
           </View>
         </View>
         <View style={styles.notificationIcon}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Notification')}>
             <FontAwesome5 name={'bell'} size={25} color={'black'} />
           </TouchableOpacity>
         </View>
       </View>
       <View style={styles.caloriesBurnedIndicatorSection}>
-        <View style={styles.circle}>
-          <Text style={styles.numberText}>1,234</Text>
-          <Text style={styles.caloriesText}>Calories</Text>
-          <Text style={styles.burnedText}>Burned</Text>
-        </View>
+        <PieChart
+          data={data}
+          width={300}
+          height={200}
+          chartConfig={chartConfig}
+          accessor={'calories'}
+          backgroundColor={'transparent'}
+          paddingLeft={'40'}
+          center={[-30, -2]}
+          absolute
+        />
       </View>
       <View style={styles.latestSection}>
-        <Text style={styles.latestText}>Latest Activity</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('ActivityHist')}>
+          <Text style={styles.latestText}>Latest Activity</Text>
+        </TouchableOpacity>
         <Timeline
           data={lists}
           separator={true}
@@ -128,14 +185,17 @@ const styles = StyleSheet.create({
   },
   caloriesBurnedIndicatorSection: {
     marginTop: 5,
-    marginLeft: 90,
-    width: 218,
+    marginLeft: 40,
+    alignItems: 'center',
+    width: 315,
     height: 190,
-    backgroundColor: '#92A3FD',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    borderRadius: 16,
+    backgroundColor: '#ffff',
+    shadowColor: '#000000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.9,
+    shadowRadius: 3,
+    elevation: 3,
   },
   latestSection: {
     width: 375,
@@ -151,39 +211,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
     fontSize: 20,
     color: '#1D1617',
-  },
-  circle: {
-    marginTop: 20,
-    marginLeft: 33,
-    width: 150,
-    height: 150,
-    flexDirection: 'column',
-    borderRadius: 150 / 2,
-    backgroundColor: 'white',
-  },
-  smallCircle1: {
-    width: 17,
-    height: 17,
-    borderRadius: 17 / 2,
-    backgroundColor: '#92A3FD',
-  },
-  smallCircle2: {
-    width: 17,
-    height: 17,
-    borderRadius: 17 / 2,
-    backgroundColor: '#543753',
-  },
-  smallCircle3: {
-    width: 17,
-    height: 17,
-    borderRadius: 17 / 2,
-    backgroundColor: '#E0855C',
-  },
-  smallCircle4: {
-    width: 17,
-    height: 17,
-    borderRadius: 17 / 2,
-    backgroundColor: '#ADA4A5',
   },
   headerText: {
     width: 120,
@@ -206,21 +233,5 @@ const styles = StyleSheet.create({
     fontFamily: 'Poppins-Bold',
     fontSize: 18,
     color: '#1D1617',
-  },
-  numberText: {
-    fontFamily: 'Poppins-Regular',
-    color: 'black',
-    marginLeft: 58,
-    marginTop: 35,
-  },
-  caloriesText: {
-    fontFamily: 'Poppins-Regular',
-    color: 'black',
-    marginLeft: 47,
-  },
-  burnedText: {
-    fontFamily: 'Poppins-Regular',
-    color: 'black',
-    marginLeft: 49,
   },
 })

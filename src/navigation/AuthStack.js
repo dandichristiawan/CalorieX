@@ -6,6 +6,8 @@ import LoginScreen from './../screens/LoginScreen'
 
 const Stack = createStackNavigator()
 
+//authstack berguna untuk memberitahu kalo user belom login
+
 export default function AuthStack () {
   return (
     <Stack.Navigator initialRouteName='Splash'>

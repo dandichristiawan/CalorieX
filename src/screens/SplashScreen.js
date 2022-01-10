@@ -5,13 +5,13 @@ const SplashScreen = props => {
   const [authLoaded, setAuthLoaded] = useState(false)
   const windowWidth = Dimensions.get('window').width
   const windowHeight = Dimensions.get('window').height
-
+//bagian ini untuk mengatur berapa detik splashscreen ingin ditampilkan
   useEffect(() => {
     setTimeout(() => {
       setAuthLoaded(true)
     }, 3000)
   }, [])
-
+//bagian ini untuk mengatur setelah waktu yang ditentukan akan kemana layar selanjutnya
   useEffect(() => {
     if (authLoaded) {
       props.navigation.replace('Login')

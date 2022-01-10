@@ -11,6 +11,7 @@ import {AuthContext} from '../navigation/AuthProvider'
 import {TextInput, Button} from 'react-native-paper'
 
 export default function LoginScreen ({navigation}) {
+  //disini kita mengimport AuthContext dari AuthProvider, untuk memberitahu jika user belum login
   const {login} = useContext(AuthContext)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -32,6 +33,7 @@ export default function LoginScreen ({navigation}) {
         }
         mode='flat'
         underlineColor='transparent'
+        activeUnderlineColor='#92A3FD'
         onChangeText={userEmail => setEmail(userEmail)}
         autoCapitalize='none'
         keyboardType='email-address'
@@ -45,6 +47,7 @@ export default function LoginScreen ({navigation}) {
         right={<TextInput.Icon name={() => <Icon name={'eye'} size={20} />} />}
         mode='flat'
         underlineColor='transparent'
+        activeUnderlineColor='#92A3FD'
         onChangeText={userPassword => setPassword(userPassword)}
         secureTextEntry={true}
       />

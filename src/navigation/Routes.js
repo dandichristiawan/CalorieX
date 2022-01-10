@@ -10,8 +10,7 @@ export default function Routes () {
   const {user, setUser} = useContext(AuthContext)
   const [loading, setLoading] = useState(true)
   const [initializing, setInitializing] = useState(true)
-  // Handle user state changes
-
+  // Function ini berguna untuk menghandle perubahan user state 
   function onAuthStateChanged (user) {
     setUser(user)
     if (initializing) setInitializing(false)

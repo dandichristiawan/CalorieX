@@ -4,6 +4,8 @@ import firestore from '@react-native-firebase/firestore'
 
 export const AuthContext = createContext({})
 
+//authprovider berisi fungsi-fungsi untuk login,logout,registrasi
+
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null)
   return (

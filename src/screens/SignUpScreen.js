@@ -1,10 +1,18 @@
 import React, {useState, useContext} from 'react'
-import {View, Text, StyleSheet, ScrollView} from 'react-native'
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+} from 'react-native'
 import {TextInput, Button} from 'react-native-paper'
 import Icon from 'react-native-vector-icons/dist/FontAwesome'
 import {AuthContext} from '../navigation/AuthProvider'
 
 export default function SignupScreen ({navigation}) {
+  //disini AuthContext berguna untuk memberitahu kalau user belom login/registrasi, maka kita perlu registrasi sebelum bisa mengakses HomeStack
   const [fname, setFname] = useState('')
   const [lname, setLname] = useState('')
   const [age, setAge] = useState('')
@@ -15,6 +23,7 @@ export default function SignupScreen ({navigation}) {
   const {register} = useContext(AuthContext)
 
   return (
+    //bagian registrasi
     <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
       <View style={styles.container}>
         <Text style={styles.header}>Hey there,</Text>
@@ -30,6 +39,7 @@ export default function SignupScreen ({navigation}) {
           }
           mode='flat'
           underlineColor='transparent'
+          activeUnderlineColor='#92A3FD'
           onChangeText={userEmail => setEmail(userEmail)}
           autoCapitalize='none'
           keyboardType='email-address'
@@ -47,6 +57,7 @@ export default function SignupScreen ({navigation}) {
           }
           mode='flat'
           underlineColor='transparent'
+          activeUnderlineColor='#92A3FD'
           onChangeText={userPassword => setPassword(userPassword)}
           secureTextEntry={true}
         />
@@ -61,6 +72,7 @@ export default function SignupScreen ({navigation}) {
           }
           user
           underlineColor='transparent'
+          activeUnderlineColor='#92A3FD'
           label='First Name'
           onChangeText={userFname => setFname(userFname)}
           autoCorrect={false}
@@ -70,6 +82,7 @@ export default function SignupScreen ({navigation}) {
           value={lname}
           mode='flat'
           underlineColor='transparent'
+          activeUnderlineColor='#92A3FD'
           label='Last Name'
           left={
             <TextInput.Icon
@@ -91,38 +104,53 @@ export default function SignupScreen ({navigation}) {
           }
           id-card-o
           underlineColor='transparent'
+          activeUnderlineColor='#92A3FD'
           onChangeText={userAge => setAge(userAge)}
           keyboardType='numeric'
           autoCorrect={false}
         />
-        <TextInput
-          style={styles.inputWeight}
-          value={weight}
-          label='Weight'
-          mode='flat'
-          left={
-            <TextInput.Icon
-              name={() => <Icon name={'heartbeat'} size={20} />}
-            />
-          }
-          underlineColor='transparent'
-          onChangeText={userWeight => setWeight(userWeight)}
-          keyboardType='numeric'
-          autoCorrect={false}
-        />
-        <TextInput
-          style={styles.inputHeight}
-          value={height}
-          label='Height'
-          left={
-            <TextInput.Icon name={() => <Icon name={'child'} size={20} />} />
-          }
-          mode='flat'
-          underlineColor='transparent'
-          onChangeText={userHeight => setHeight(userHeight)}
-          keyboardType='numeric'
-          autoCorrect={false}
-        />
+        <View style={styles.inputWeightContainer}>
+          <TextInput
+            style={styles.inputWeight}
+            value={weight}
+            label='Weight'
+            mode='flat'
+            left={
+              <TextInput.Icon
+                name={() => <Icon name={'heartbeat'} size={20} />}
+              />
+            }
+            underlineColor='transparent'
+            activeUnderlineColor='#92A3FD'
+            onChangeText={userWeight => setWeight(userWeight)}
+            keyboardType='numeric'
+            autoCorrect={false}
+          />
+          <Image
+            style={styles.imageStyle}
+            source={require('../images/kg.png')}
+          />
+        </View>
+        <View style={styles.inputHeightContainer}>
+          <TextInput
+            style={styles.inputHeight}
+            value={height}
+            label='Height'
+            left={
+              <TextInput.Icon name={() => <Icon name={'child'} size={20} />} />
+            }
+            mode='flat'
+            underlineColor='transparent'
+            activeUnderlineColor='#92A3FD'
+            onChangeText={userHeight => setHeight(userHeight)}
+            keyboardType='numeric'
+            autoCorrect={false}
+          />
+          <Image
+            style={styles.imageStyle}
+            source={require('../images/cm.png')}
+          />
+        </View>
         <Button
           style={styles.signUpBtn}
           icon='plus-circle'
@@ -133,6 +161,12 @@ export default function SignupScreen ({navigation}) {
           }>
           Sign Up
         </Button>
+        <TouchableOpacity
+          style={{flexDirection: 'row'}}
+          onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.alreadyHaveText}>Already have an account?</Text>
+          <Text style={styles.LoginTextButton}> Login</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   )
@@ -142,6 +176,22 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     flex: 1,
     alignItems: 'center',
+  },
+  inputWeightContainer: {
+    width: 315,
+    height: 44,
+    margin: 10,
+    flexDirection: 'row',
+  },
+  inputHeightContainer: {
+    width: 315,
+    height: 44,
+    margin: 10,
+    flexDirection: 'row',
+  },
+  imageStyle: {
+    marginTop: -2, 
+    marginLeft: 15,
   },
   header: {
     fontFamily: 'Poppins-Regular',
@@ -201,18 +251,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#F7F8F8',
   },
   inputWeight: {
-    width: 315,
+    width: 255,
     height: 48,
-    margin: 10,
     borderRadius: 5,
     borderWidth: 0.1,
     borderColor: '#ADA4A5',
     backgroundColor: '#F7F8F8',
   },
   inputHeight: {
-    width: 315,
+    width: 255,
     height: 48,
-    margin: 10,
     borderRadius: 5,
     borderWidth: 0.1,
     borderColor: '#ADA4A5',
@@ -221,6 +269,7 @@ const styles = StyleSheet.create({
 
   signUpBtn: {
     marginTop: 13,
+    marginBottom: 13,
     width: 315,
     height: 44,
     borderRadius: 16,
@@ -232,5 +281,15 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.9,
     shadowRadius: 3,
     elevation: 3,
+  },
+  alreadyHaveText: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 14,
+    color: '#1D1617',
+  },
+  LoginTextButton: {
+    fontFamily: 'Poppins-Regular',
+    fontSize: 14,
+    color: '#C58BF2',
   },
 })

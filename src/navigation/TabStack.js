@@ -1,14 +1,15 @@
-import React from 'react'
+import React, {Component} from 'react'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs'
 import {Text} from 'react-native'
 import HomeScreen from './../screens/HomeScreen'
-import ProfileScreen from './../screens/ProfileScreen';
-import MainScreen from './../screens/MainScreen';
+import ProfileScreen from './../screens/ProfileScreen'
+import MainScreen from './../screens/MainScreen'
 
 const Tabs = createMaterialBottomTabNavigator()
 const TabsNavigation = () => {
   return (
+    //navbar
     <Tabs.Navigator
       initialRouteName='Dashboard'
       barStyle={{
@@ -50,7 +51,7 @@ const TabsNavigation = () => {
                 color: 'white',
                 textAlign: 'center',
               }}>
-              Main
+              Run
             </Text>
           ),
           tabBarIcon: ({color, size}) => (

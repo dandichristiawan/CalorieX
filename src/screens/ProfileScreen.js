@@ -16,7 +16,7 @@ import {AuthContext} from '../navigation/AuthProvider'
 import firestore from '@react-native-firebase/firestore'
 import firebase from '@react-native-firebase/app'
 
-export default function ProfileScreen () {
+export default function ProfileScreen ({navigation}) {
   const {user, logout} = useContext(AuthContext)
   const [toggleValue, setToggleValue] = useState(false)
   const [userInfo, setUserInfo] = useState([])
@@ -47,7 +47,7 @@ export default function ProfileScreen () {
           <Text style={styles.profileNameText}>
             {userInfo.fname} {userInfo.lname}
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('Personal')}>
             <View style={styles.editProfileButton}>
               <Text style={styles.editProfileButtonText}>Edit</Text>
             </View>
@@ -70,27 +70,29 @@ export default function ProfileScreen () {
         <View style={styles.accountSection}>
           <View style={styles.accountTitleSection}>
             <Text style={styles.accountTextStyle}>Account</Text>
-            <View style={styles.accountContent1Section}>
-              <IonIcon name='person-outline' size={20} color='#92A3FD' />
-              <Text style={styles.accountContentText1}>Personal Data</Text>
-              <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Personal')}>
+              <View style={styles.accountContent1Section}>
+                <IonIcon name='person-outline' size={20} color='#92A3FD' />
+                <Text style={styles.accountContentText1}>Personal Data</Text>
                 <IonIcon name='chevron-forward' size={20} color='#7B6F72' />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.accountContent2Section}>
-              <Entypo name='text-document' size={20} color='#92A3FD' />
-              <Text style={styles.accountContentText2}>Achievement</Text>
-              <TouchableOpacity>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('Achievement')}>
+              <View style={styles.accountContent2Section}>
+                <Entypo name='text-document' size={20} color='#92A3FD' />
+                <Text style={styles.accountContentText2}>Achievement</Text>
                 <IonIcon name='chevron-forward' size={20} color='#7B6F72' />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.accountContent3Section}>
-              <IonIcon name='pie-chart-outline' size={20} color='#92A3FD' />
-              <Text style={styles.accountContentText3}>Activity History</Text>
-              <TouchableOpacity>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('ActivityHist')}>
+              <View style={styles.accountContent3Section}>
+                <IonIcon name='pie-chart-outline' size={20} color='#92A3FD' />
+                <Text style={styles.accountContentText3}>Activity History</Text>
                 <IonIcon name='chevron-forward' size={20} color='#7B6F72' />
-              </TouchableOpacity>
-            </View>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
         <View style={styles.notificationSection}>
@@ -129,38 +131,39 @@ export default function ProfileScreen () {
         <View style={styles.otherSection}>
           <View style={styles.otherTitleSection}>
             <Text style={styles.otherTextStyle}>Other</Text>
-            <View style={styles.otherContent1Section}>
-              <IonIcon name='md-mail-outline' size={20} color='#92A3FD' />
-              <Text style={styles.otherContent1Text}>Contact Us</Text>
-              <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Contact')}>
+              <View style={styles.otherContent1Section}>
+                <IonIcon name='md-mail-outline' size={20} color='#92A3FD' />
+                <Text style={styles.otherContent1Text}>Contact Us</Text>
                 <IonIcon name='chevron-forward' size={20} color='#7B6F72' />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.otherContent2Section}>
-              <IonIcon
-                name='shield-checkmark-outline'
-                size={20}
-                color='#92A3FD'
-              />
-              <Text style={styles.otherContent2Text}>Privacy Policy</Text>
-              <TouchableOpacity>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate('PrivacyPolicies')}>
+              <View style={styles.otherContent2Section}>
+                <IonIcon
+                  name='shield-checkmark-outline'
+                  size={20}
+                  color='#92A3FD'
+                />
+                <Text style={styles.otherContent2Text}>Privacy Policy</Text>
                 <IonIcon name='chevron-forward' size={20} color='#7B6F72' />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.otherContent3Section}>
-              <IonIcon name='md-settings-outline' size={20} color='#92A3FD' />
-              <Text style={styles.otherContent3Text}>Settings</Text>
-              <TouchableOpacity>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Settings')}>
+              <View style={styles.otherContent3Section}>
+                <IonIcon name='md-settings-outline' size={20} color='#92A3FD' />
+                <Text style={styles.otherContent3Text}>Settings</Text>
                 <IonIcon name='chevron-forward' size={20} color='#7B6F72' />
-              </TouchableOpacity>
-            </View>
+              </View>
+            </TouchableOpacity>
           </View>
         </View>
         <Button
           style={styles.logoutButton}
           icon='arrow-left'
           mode='contained'
-          labelStyle={{color: 'red',}}
+          labelStyle={{color: 'red'}}
           onPress={() => logout()}>
           Logout
         </Button>
@@ -457,7 +460,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#1D1617',
     marginTop: 19,
-    marginLeft: -50,
+    marginLeft: -5,
   },
   headerText: {
     fontFamily: 'Poppins-Bold',
